@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <title>Mi App</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icono para iOS -->
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <style>
+        /* Reset completo - modo app real */
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            position: fixed;
+        }
+        
+        img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            display: block;
+        }
+        
+        /* iOS específico */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                height: -webkit-fill-available;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CAMBIA "pantalla.png" POR EL NOMBRE DE TU IMAGEN -->
+    <img src="pantalla-celular.png" alt="" id="miImagen">
+    
+    <script>
+        // Detectar si ya está instalado como app
+        if (window.navigator.standalone === true) {
+            console.log("Ejecutando en modo app");
+        } else if (matchMedia('(display-mode: standalone)').matches) {
+            console.log("También en modo app (nuevo estándar)");
+        }
+        
+        // Prevenir acciones no deseadas
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+        
+        // Mensaje para instalar
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            // Puedes mostrar un botón de "Instalar app" aquí si quieres
+        });
+    </script>
+</body>
+</html>
